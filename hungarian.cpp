@@ -81,7 +81,7 @@ Result Solve(const Matrix &input, MODE mode) {
 
   result.assignment.resize(mrank, std::vector<int>(mrank, NOT_ASSIGNED));
 
-  int j, k, l, s, t, q, unmatched;
+  int k, l, s, t, q, unmatched;
 
   int cost = 0;
 
