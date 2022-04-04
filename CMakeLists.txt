@@ -3,8 +3,11 @@ project("Hungarian Algorithm")
 
 set(CMAKE_CXX_STANDARD 11)
 
-add_library(hungarian hungarian.cpp hungarian.hpp)
-target_compile_options(hungarian PRIVATE -fPIC)
+add_library(hungarian SHARED hungarian.cpp)
+target_include_directories(hungarian PUBLIC .)
 
 add_executable(test_cases test.cpp)
 target_link_libraries(test_cases hungarian)
+
+install(TARGETS hungarian
+        LIBRARY DESTINATION $ENV{HOME}/.local/lib)
