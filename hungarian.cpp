@@ -83,7 +83,7 @@ Result Solve(const Matrix& input, MODE mode) {
 
     result.assignment.resize(mrank, std::vector<int>(mrank, NOT_ASSIGNED));
 
-    int k, l, s, t, q, unmatched;
+    int k=0, l=0, s=0, t=0, q=0, unmatched=0;
 
     int cost = 0;
 
@@ -144,7 +144,7 @@ Result Solve(const Matrix& input, MODE mode) {
                 row_mate[l] = k;
                 if (verbose)
                     fprintf(stderr, "matching col %d==row %d\n", l, k);  // NOLINT(cppcoreguidelines-pro-type-vararg)
-                goto row_done;
+                goto row_done; //NOLINT
             }
         }
         col_mate[k] = -1;
@@ -157,7 +157,7 @@ Result Solve(const Matrix& input, MODE mode) {
 
     // Begin Hungarian algorithm 18
     if (t == 0)
-        goto done;
+        goto done; //NOLINT
     unmatched = t;
     while (true) {
         if (verbose)
@@ -171,12 +171,11 @@ Result Solve(const Matrix& input, MODE mode) {
                     s = row_dec[k];
                     for (l = 0; l < mrank; l++)
                         if (slack[l]) {
-                            int del;
-                            del = result.cost[k][l] - s + col_inc[l];
+                            int del = result.cost[k][l] - s + col_inc[l];
                             if (del < slack[l]) {
                                 if (del == 0) {
                                     if (row_mate[l] < 0)
-                                        goto breakthru;
+                                        goto breakthru; //NOLINT
                                     slack[l]      = 0;
                                     parent_row[l] = k;
                                     if (verbose)
@@ -225,7 +224,7 @@ Result Solve(const Matrix& input, MODE mode) {
                                     col_inc[j] += s;
                                 }
                             }
-                            goto breakthru;
+                            goto breakthru; //NOLINT
                         } else {
                             parent_row[l] = k;
                             if (verbose)
@@ -261,7 +260,7 @@ Result Solve(const Matrix& input, MODE mode) {
         }
         // End update the matching 20
         if (--unmatched == 0)
-            goto done;
+            goto done; // NOLINT
         // Begin get ready for another stage 17
         t = 0;
         for (l = 0; l < mrank; l++) {
